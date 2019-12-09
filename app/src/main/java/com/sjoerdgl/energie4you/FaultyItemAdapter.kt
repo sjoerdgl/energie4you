@@ -38,7 +38,7 @@ class FaultyItemAdapter(val faultyItems: ArrayList<FaultyItem>) : RecyclerView.A
         textView.text = faultyItem.name
         categoryTextView.text = faultyItem.category
         holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView.context, TestActivity::class.java)
+            val intent = Intent(holder.itemView.context, DetailActivity::class.java)
             (holder.itemView.context as Activity).startActivity(intent)
 
             Toast.makeText(holder.itemView.context, position.toString(), Toast.LENGTH_SHORT).show()
