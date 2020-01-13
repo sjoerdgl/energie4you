@@ -1,29 +1,25 @@
 package com.sjoerdgl.energie4you
 
+import android.app.Activity
 import android.content.Intent
-import android.net.Uri
+import android.graphics.Bitmap
 import android.os.Bundle
-import android.os.Environment
+import android.os.StrictMode
 import android.provider.MediaStore
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import java.io.File
-import android.os.StrictMode
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
 
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        const val TAKE_PICTURE_CODE = 1
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,15 +34,25 @@ class MainActivity : AppCompatActivity() {
             StrictMode.setVmPolicy(builder.build())
 
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            val photo = File(filesDir,  "Pic.jpg");
-            intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                Uri.fromFile(photo));
-            startActivityForResult(intent, 1);
+            startActivityForResult(intent, TAKE_PICTURE_CODE);
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode != Activity.RESULT_OK) {
+            return
+        }
+
+        when (requestCode) {
+            TAKE_PICTURE_CODE -> {
+                val imageBitmap = data?.extras?.get("data") as Bitmap
+
+                val intent = Intent(this, DetailActivity::class.java)
+                intent.putExtra("imageBitmap", imageBitmap);
+                this.startActivity(intent)
+            }
+        }
 
     }
 
