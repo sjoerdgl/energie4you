@@ -43,5 +43,12 @@
                 android:maxHeight="180dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/category_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_below="@id/description_layout"/>
     </RelativeLayout>
 </ScrollView>

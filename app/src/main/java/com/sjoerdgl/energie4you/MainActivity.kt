@@ -30,10 +30,6 @@ class MainActivity : AppCompatActivity() {
         const val TAKE_PICTURE_CODE = 1
     }
 
-    fun createFaultyItem(faultyItem: FaultyItem) = GlobalScope.launch {
-        faultyItemRepository.create(faultyItem)
-    }
-    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -52,15 +48,10 @@ class MainActivity : AppCompatActivity() {
         recycler_view.layoutManager = LinearLayoutManager(this)
 
         fab.setOnClickListener { view ->
-            createFaultyItem(FaultyItem(Random.nextInt(Int.MAX_VALUE),"sjoerd", "niks", ""))
             val builder = StrictMode.VmPolicy.Builder()
             StrictMode.setVmPolicy(builder.build())
 
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            val photo = File(filesDir,  "Pic.jpg");
-
-            intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                Uri.fromFile(photo));
             startActivityForResult(intent, TAKE_PICTURE_CODE);
         }
     }

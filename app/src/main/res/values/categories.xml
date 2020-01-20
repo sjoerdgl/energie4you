@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categories">
+        <item>Grondkabels</item>
+        <item>Luchtkabels</item>
+        <item>Hoogspanningsmasten</item>
+        <item>Schakelkasten</item>
+    </string-array>
+</resources>
