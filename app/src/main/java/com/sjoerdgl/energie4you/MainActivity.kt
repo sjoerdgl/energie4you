@@ -5,21 +5,28 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.os.StrictMode
 import android.provider.MediaStore
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.io.File
-import kotlin.random.Random
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var faultyItemRepository: FaultyItemRepository
@@ -38,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         val faultyItemDao = FaultyItemDatabase.getDatabase(application).faultyItemDao()
         faultyItemRepository = FaultyItemRepository(faultyItemDao)
 
+
         allFaultyItems = faultyItemRepository.allFaultyItems
         allFaultyItems.observe(this, Observer {
             adapter.setNewList(ArrayList(it))
@@ -47,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(this)
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener {
             val builder = StrictMode.VmPolicy.Builder()
             StrictMode.setVmPolicy(builder.build())
 
@@ -65,19 +73,13 @@ class MainActivity : AppCompatActivity() {
         when (requestCode) {
             TAKE_PICTURE_CODE -> {
                 val imageBitmap = data?.extras?.get("data") as Bitmap
-
                 val intent = Intent(this, DetailActivity::class.java)
+
                 intent.putExtra("imageBitmap", imageBitmap);
                 this.startActivity(intent)
             }
         }
 
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

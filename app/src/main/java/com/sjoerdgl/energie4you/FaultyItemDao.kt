@@ -6,7 +6,7 @@ import java.util.*
 
 @Dao
 interface FaultyItemDao {
-    @Query("SELECT id, name, description, photo from faulty_item ORDER BY id DESC")
+    @Query("SELECT id, name, description, category, photo from faulty_item ORDER BY id DESC")
     fun getFaultyItems(): LiveData<List<FaultyItem>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

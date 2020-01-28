@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [FaultyItem::class], version = 1, exportSchema = false)
+@Database(entities = [FaultyItem::class], version = 2, exportSchema = false)
 abstract class FaultyItemDatabase : RoomDatabase() {
 
     abstract fun faultyItemDao(): FaultyItemDao
@@ -25,7 +25,7 @@ abstract class FaultyItemDatabase : RoomDatabase() {
                     context.applicationContext,
                     FaultyItemDatabase::class.java,
                     "faulty_item_database"
-                ).build()
+                ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
                 return instance
             }

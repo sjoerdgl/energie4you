@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 data class FaultyItem(
     @ColumnInfo(name = "name") var name: String,
     @ColumnInfo(name = "description") var description: String,
+    @ColumnInfo(name = "category") var category: Int,
     @ColumnInfo(name = "photo") var photo: String
 ) {
     @PrimaryKey(autoGenerate = true)

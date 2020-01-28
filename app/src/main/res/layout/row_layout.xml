@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="72dp"
     android:paddingTop="5dp"
-    android:paddingBottom="5dp"
-    >
+    android:paddingBottom="5dp">
 
-    <ImageView
+    <com.mikhaellopez.circularimageview.CircularImageView
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_margin="8dp"
         android:id="@+id/thumbnail"
-        android:background="@drawable/circle_shape"
         android:clickable="false"
         android:layout_centerVertical="true"
-        android:contentDescription="lol"
+        android:scaleType="centerCrop"
+        app:civ_border_width="0dp"
         />
 
     <LinearLayout
@@ -27,7 +26,6 @@
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:orientation="vertical">
-
 
         <TextView
             android:id="@+id/employee_name"

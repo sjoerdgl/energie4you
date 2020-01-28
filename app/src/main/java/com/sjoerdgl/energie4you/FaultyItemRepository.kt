@@ -9,6 +9,10 @@ class FaultyItemRepository(private val faultyItemDao: FaultyItemDao) {
         faultyItemDao.create(faultyItem)
     }
 
+    suspend fun update(faultyItem: FaultyItem) {
+        faultyItemDao.update(faultyItem)
+    }
+
     fun findById(id: Int): LiveData<FaultyItem> {
         return faultyItemDao.findById(id)
     }

@@ -2,7 +2,6 @@ package com.sjoerdgl.energie4you
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Dialog
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -10,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.widget.Toast
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.widget.ImageView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -44,6 +45,9 @@ class FaultyItemAdapter(val faultyItems: ArrayList<FaultyItem>) : RecyclerView.A
         // Set item views based on your views and data model
         val textView = holder.nameTextView
         val categoryTextView = holder.categoryTextView
+        val thumbnail = holder.photo
+
+        thumbnail.setImageBitmap(BitmapFactory.decodeFile(faultyItem.photo))
 
         textView.text = faultyItem.name
         categoryTextView.text = faultyItem.description
@@ -63,14 +67,14 @@ class FaultyItemAdapter(val faultyItems: ArrayList<FaultyItem>) : RecyclerView.A
                 .setNegativeButton("Nee") { dialog, which ->
                     dialog.dismiss()
                 }
-                .setPositiveButton("Ja", { dialog, which ->
+                .setPositiveButton("Ja") { dialog, which ->
                     GlobalScope.launch {
                         FaultyItemDatabase.getDatabase(holder.itemView.context.applicationContext).faultyItemDao().delete(faultyItems[position])
                     }
                     dialog.dismiss()
-                    Toast.makeText(holder.itemView.context,"item is verwijderd", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(holder.itemView.context,"Verwijderd", Toast.LENGTH_SHORT).show()
 
-                })
+                }
             alertDialog.create().show()
             return@setOnLongClickListener true
         }
@@ -85,6 +89,7 @@ class FaultyItemAdapter(val faultyItems: ArrayList<FaultyItem>) : RecyclerView.A
         // for any view that will be set as you render a row
         var nameTextView: TextView = itemView.findViewById(R.id.employee_name)
         var categoryTextView: TextView = itemView.findViewById(R.id.category_name)
+        var photo: ImageView = itemView.findViewById(R.id.thumbnail)
 
         // to access the context from any ViewHolder instance.
     }
